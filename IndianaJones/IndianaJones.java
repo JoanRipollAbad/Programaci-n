@@ -12,13 +12,16 @@ public class IndianaJones {
      */
     public static int[] obtenerPosicionInicio(){
 
-        return new int[0];
+        return new int[] {1,1};
+
     }
 
     /**
      * Modifica la posición proporcionada a la posición de inicio de indiana jones.
      */
     public static void reestablecerAPosicionInicial(int[] posicion){
+
+        posicion = obtenerPosicionInicio();
 
     }
 
@@ -31,6 +34,15 @@ public class IndianaJones {
      * 2:Abajo, 3: Derecha o 4: Izquierda)
      */
     public static void moverEnDireccion(String[][] escenario, int direccion, int[]posicion){
+
+        int[] ayuda = posicion;
+        ayuda = Movimiento.obtenerCoordenadaAdyacente(direccion, posicion);
+
+        if (Escenario.estaPermitidoElPaso(escenario, ayuda[0], ayuda[1]) && Movimiento.esUnaDireccionValida(direccion)){
+
+            Movimiento.obtenerCoordenadaAdyacente(direccion, posicion);
+
+        }
 
     }
 

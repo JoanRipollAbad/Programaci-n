@@ -12,7 +12,7 @@ public class Serpientes {
      */
     public static int[][] obtenerPosicionesInicio(){
 
-        return new int[0][];
+        return new int[][] {{8,3} , {4,8} , {5,2}};
     }
 
     /**
@@ -20,6 +20,7 @@ public class Serpientes {
      */
     public static void reestablecerAPosicionesIniciales(int[][] posicionesSerpientes){
 
+        posicionesSerpientes = obtenerPosicionesInicio();
     }
 
     /**
@@ -28,5 +29,36 @@ public class Serpientes {
      */
     public static void mover(String[][] escenario, int[][] posicionSerpientes){
 
+        int posSerpiente;
+        int[] ayuda;
+
+        for (int i = 0; i < posicionSerpientes.length; i++) {
+
+            int intentos = 0;
+
+            do {
+                posSerpiente = Movimiento.obtieneDireccionAleatoria();
+                ayuda = Movimiento.obtenerCoordenadaAdyacente(posSerpiente, posicionSerpientes[i]);
+
+                if (Escenario.estaPermitidoElPaso(escenario, posicionSerpientes[i][0], posicionSerpientes[i][1]) || !escenario[ayuda[0]][ayuda[1]].equals(Escenario.SERPIENTE)){
+
+                    Movimiento.obtenerCoordenadaAdyacente(posSerpiente, posicionSerpientes[i]);
+                }
+
+                intentos++;
+
+            }while (intentos < 3);
+
+            for (int j = 1; j <= 4 ; j++) {
+
+                ayuda = Movimiento.obtenerCoordenadaAdyacente(j, posicionSerpientes[i]);
+
+                if (Escenario.estaPermitidoElPaso(escenario, ayuda[0], ayuda[1]) || !escenario[ayuda[0]][ayuda[1]].equals(Escenario.SERPIENTE)){
+
+                    Movimiento.obtenerCoordenadaAdyacente(j, posicionSerpientes[i]);
+                break;
+                }
+            }
+        }
     }
 }

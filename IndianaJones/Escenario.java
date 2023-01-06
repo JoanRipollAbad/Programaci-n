@@ -16,6 +16,8 @@ public class Escenario {
     static final String NADA = "\uD83ED\uDFE1";
     static final String MURO = "\uD83E\uDDF1";
     static final String GEMA = "\uD83D\uDC8E";
+    static final String SERPIENTE = "\uD83D\uDC8E"; //cambiar le dibujito osea la parte del ud...
+    static final String PERSONAJE = "\uD83D\uDC8E"; //cambiar le dibujito osea la parte del ud...
 
     /**
      * Crea y devuelve el escenario inicial del juego. Dispones de un ejemplo de
@@ -69,7 +71,7 @@ public class Escenario {
                 return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -80,7 +82,7 @@ public class Escenario {
 
         if (esUnPuntoDelEscenario(escenario, x, y)) {
 
-            if (escenario[x][y].equals(GEMA)) {
+            if (escenario[y][x].equals(GEMA)) {
                 return true;
             }
         }
@@ -96,7 +98,7 @@ public class Escenario {
 
         if (esUnPuntoDelEscenario(escenario, x, y)) {
 
-            if (escenario[x][y].equals(GEMA)) {
+            if (escenario[y][x].equals(GEMA)) {
 
             }
         }
@@ -117,10 +119,10 @@ public class Escenario {
             }
         }
         if (gemasQuedan == 0){
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 
