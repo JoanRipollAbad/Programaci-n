@@ -198,7 +198,7 @@ public class Activitat17 {
                 indice[indice.length - 1] = matrizBinaria[i][i];
             }
             for (int i = 0; i < indice.length; i++) {
-                if (indice[i] != valorBinario){
+                if (indice[i] != valorBinario) {
                     return false;
                 }
             }
@@ -217,24 +217,24 @@ public class Activitat17 {
      * Si se proporciona como @valorBinario un valor que no es ni 0 ni 1 se
      * retornará null
      **/
-     public static boolean tieneSubdiagonalMismoValor(int[][] matrizBinaria, int valorBinario) {
-         int[] indice = new int[0];
+    public static boolean tieneSubdiagonalMismoValor(int[][] matrizBinaria, int valorBinario) {
+        int[] indice = new int[0];
 
-         if (esValida(matrizBinaria)) {
+        if (esValida(matrizBinaria)) {
 
-             for (int i = 0; i < matrizBinaria.length; i++) {
-                 indice = Arrays.copyOf(indice, indice.length + 1);
-                 indice[indice.length - 1] = matrizBinaria[i][matrizBinaria.length - i - 1];
-             }
-             for (int i = 0; i < indice.length; i++) {
-                 if (indice[i] != valorBinario){
-                     return false;
-                 }
-             }
-             return true;
-         }
-         return false;
-      }
+            for (int i = 0; i < matrizBinaria.length; i++) {
+                indice = Arrays.copyOf(indice, indice.length + 1);
+                indice[indice.length - 1] = matrizBinaria[i][matrizBinaria.length - i - 1];
+            }
+            for (int i = 0; i < indice.length; i++) {
+                if (indice[i] != valorBinario) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Imprime los resultados de los 6 puntos exigidos por el ejercicio en función de
@@ -242,51 +242,77 @@ public class Activitat17 {
      * Si la matriz no está compuesta únicamente por 0’s y 1’s imprimirá el mensaje de
      * error: ‘La matriz proporcionada no es binaria’
      **/
-    public static void visualizarResultados(int[][] matrizBinaria){
+    public static void visualizarResultados(int[][] matrizBinaria) {
 
-        if (esValida(matrizBinaria) == false){
+        if (esValida(matrizBinaria) == false) {
             System.out.println("La matriz proporcionada no es binaria");
         }
 
         verMatriz(matrizBinaria);
-        System.out.printf("1. Fila índice %s con mayor número de 1’s\n" , Arrays.toString(indicesFilasConMasUnos(matrizBinaria)));
-        System.out.printf("2. Columna índice %s con mayor número de 1’s\n" , Arrays.toString(indicesColumnasConMasUnos(matrizBinaria)));
+        System.out.printf("1. Fila índice %s con mayor número de 1’s\n", Arrays.toString(indicesFilasConMasUnos(matrizBinaria)));
+        System.out.printf("2. Columna índice %s con mayor número de 1’s\n", Arrays.toString(indicesColumnasConMasUnos(matrizBinaria)));
 
-        int[] arrayVacio = new int[0];
+        int[] nuevoArray1 = indicesFilasConMismoValor(matrizBinaria, 1);
+        int[] nuevoArray0 = indicesFilasConMismoValor(matrizBinaria, 0);
 
-        if (indicesFilasConMismoValor(matrizBinaria, 1) == arrayVacio){
+        int[] nuevoArray2 = indicesColumnasConMismoValor(matrizBinaria, 1);
+        int[] nuevoArray3 = indicesColumnasConMismoValor(matrizBinaria, 0);
+
+        boolean comprobador = false;
+
+        if (indicesFilasConMismoValor(matrizBinaria, 1) == null || nuevoArray1.length < 1) {
+
+        } else {
+            for (int i = 0; i < nuevoArray1.length; i++) {
+                System.out.printf("3. Fila índice %s con todo 1’s\n", nuevoArray1[i]);
+            }
+            comprobador = true;
+        }
+        if (indicesFilasConMismoValor(matrizBinaria, 0) == null || nuevoArray0.length < 1) {
+
+        } else {
+            for (int i = 0; i < nuevoArray0.length; i++) {
+                System.out.printf("3. Fila índice %s con todo 0’s\n", nuevoArray0[i]);
+            }
+            comprobador = true;
+        }
+
+        if (comprobador == false) {
             System.out.println("3. No hay filas con el mismo número.");
         }
-        else if ( indicesFilasConMismoValor(matrizBinaria , 0) == arrayVacio) {
-            System.out.println("3. No hay filas con el mismo número.");
+
+        comprobador = false;
+
+        if (indicesColumnasConMismoValor(matrizBinaria, 1) == null || nuevoArray2.length < 1) {
+        } else {
+            for (int i = 0; i < nuevoArray2.length; i++) {
+                System.out.printf("4. Columna índice %s con todo 1’s\n", nuevoArray2[i]);
+            }
+            comprobador = true;
         }
-        else {
-            System.out.printf("3. Fila índice %s con todo 0’s\n" , Arrays.toString(indicesFilasConMismoValor(matrizBinaria, 0)));
-            System.out.printf("3. Fila índice %s con todo 1’s\n" , Arrays.toString(indicesFilasConMismoValor(matrizBinaria, 1)));
+        if (indicesColumnasConMismoValor(matrizBinaria, 0) == null || nuevoArray3.length < 1) {
+        } else {
+            for (int i = 0; i < nuevoArray3.length; i++) {
+                System.out.printf("4. Columna índice %s con todo 0’s\n", nuevoArray3[i]);
+            }
+            comprobador = true;
         }
-        if (Arrays.toString(indicesColumnasConMismoValor(matrizBinaria, 1)) == Arrays.toString(arrayVacio) || Arrays.toString(indicesColumnasConMismoValor(matrizBinaria , 0) ) == Arrays.toString(arrayVacio)){
-            System.out.println("4. No hay Columnas con el mismo número.");
+        if (comprobador == false) {
+            System.out.println("4. No hay columnas con el mismo número.");
         }
-        else {
-            System.out.printf("4. Columna índice %s con todo 0’s\n" , Arrays.toString(indicesColumnasConMismoValor(matrizBinaria, 0)));
-            System.out.printf("4. Columna índice %s con todo 1’s\n" , Arrays.toString(indicesColumnasConMismoValor(matrizBinaria, 1)));
-        }
-        if (tieneDiagonalMayorMismoValor(matrizBinaria, 1) == true){
+
+        if (tieneDiagonalMayorMismoValor(matrizBinaria, 1) == true) {
             System.out.printf("5. Diagonal mayor con todo 1’s \n");
-        }
-        else if (tieneDiagonalMayorMismoValor(matrizBinaria, 0) == true){
+        } else if (tieneDiagonalMayorMismoValor(matrizBinaria, 0) == true) {
             System.out.printf("5. Diagonal mayor con todo 0’s \n");
-        }
-        else {
+        } else {
             System.out.println("5. Diagonal mayor con mezcla de 0’s y 1’s");
         }
-        if (tieneSubdiagonalMismoValor(matrizBinaria, 1) == true){
+        if (tieneSubdiagonalMismoValor(matrizBinaria, 1) == true) {
             System.out.printf("6. Subdiagonal con todo 1’s \n");
-        }
-        else if (tieneSubdiagonalMismoValor(matrizBinaria, 0) == true){
+        } else if (tieneSubdiagonalMismoValor(matrizBinaria, 0) == true) {
             System.out.printf("6. Subdiagonal con todo 0’s \n");
-        }
-        else {
+        } else {
             System.out.println("6. Subdiagonal con mezcla de 0’s y 1’s");
         }
     }
@@ -299,6 +325,7 @@ public class Activitat17 {
             System.out.println();
         }
     }
+
     public static boolean esValida(int[][] matriz) {
         if (matriz.length == 0) {
             return false;
