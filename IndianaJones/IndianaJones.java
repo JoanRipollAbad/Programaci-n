@@ -21,7 +21,13 @@ public class IndianaJones {
      */
     public static void reestablecerAPosicionInicial(int[] posicion){
 
-        posicion = obtenerPosicionInicio();
+        int[] posicionInicio = obtenerPosicionInicio();
+
+        for (int i = 0; i < posicionInicio.length; i++) {
+
+            posicion[i] = posicionInicio[i];
+
+        }
 
     }
 
@@ -35,12 +41,13 @@ public class IndianaJones {
      */
     public static void moverEnDireccion(String[][] escenario, int direccion, int[]posicion){
 
-        int[] ayuda = posicion;
-        ayuda = Movimiento.obtenerCoordenadaAdyacente(direccion, posicion);
+        if (Escenario.estaPermitidoElPaso(escenario, Movimiento.obtenerCoordenadaAdyacente(direccion,posicion)[0], Movimiento.obtenerCoordenadaAdyacente(direccion,posicion)[1]) && Movimiento.esUnaDireccionValida(direccion)){
 
-        if (Escenario.estaPermitidoElPaso(escenario, ayuda[0], ayuda[1]) && Movimiento.esUnaDireccionValida(direccion)){
+            for (int i = 0; i < posicion.length; i++) {
 
-            Movimiento.obtenerCoordenadaAdyacente(direccion, posicion);
+                posicion[i] = Movimiento.obtenerCoordenadaAdyacente(direccion, posicion)[i];
+
+            }
 
         }
 

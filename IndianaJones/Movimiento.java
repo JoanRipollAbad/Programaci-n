@@ -1,5 +1,6 @@
 package IndianaJones;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Movimiento {
@@ -30,7 +31,7 @@ public class Movimiento {
      */
     public static int obtieneDireccionAleatoria() {
 
-        return (int) (Math.random() * 4 + 1);
+        return (int) (Math.random() * 4) + 1;
     }
 
     /**
@@ -47,23 +48,25 @@ public class Movimiento {
      */
     public static int[] obtenerCoordenadaAdyacente(int direccion, int[] posicion) {
 
-        if (!esUnaDireccionValida(direccion) || posicion.length != 2){
+        int[] posic = Arrays.copyOf(posicion, posicion.length);
 
-                return posicion;
+        if (!esUnaDireccionValida(direccion) || posic.length != 2){
+
+                return posic;
 
             }
             switch (direccion){
-                case 1: posicion[0] -= 1;
+                case 1: posic[0] -= 1;
                 break;
-                case 2: posicion[0] += 1;
+                case 2: posic[0] += 1;
                 break;
-                case 3: posicion[1] += 1;
+                case 3: posic[1] += 1;
                 break;
-                case 4: posicion[1] -= 1;
+                case 4: posic[1] -= 1;
                 break;
             }
 
-        return posicion;
+        return posic;
     }
 
     /**
@@ -74,7 +77,7 @@ public class Movimiento {
      * Este método hace uso del objeto Scanner declarado globalmente en la clase principal.
      * Retorna el valor numérico de la dirección leída (1:Arriba, 2:Abajo, 3: Derecha, 4: Izquierda)
      */
-    public static int pedirDireccion() {    // ta good de momento
+    public static int pedirDireccion() {
 
         int direccion = 0;
 
@@ -82,22 +85,20 @@ public class Movimiento {
 
             System.out.print("Introduce el movimiento (W/A/S/D):");
 
-            Principal.scanner = new Scanner(System.in);
-
             switch (Principal.scanner.next()) {
 
                 case "W", "w":
                     direccion = 1;
-                    break;
+                    return direccion;
                 case "A", "a":
                     direccion = 4;
-                    break;
+                    return direccion;
                 case "S", "s":
                     direccion = 2;
-                    break;
+                    return direccion;
                 case "D", "d":
                     direccion = 3;
-                    break;
+                    return direccion;
             }
 
         } while (direccion < 1 || direccion > 4);

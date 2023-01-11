@@ -44,14 +44,11 @@ public class Escenario {
      */
     public static boolean esUnPuntoDelEscenario(String[][] escenario, int x, int y){
 
-        if (y <= escenario.length){
-
             for (int i = 0; i < escenario.length; i++) {
-                if (x < escenario[i].length || x > escenario[i].length){
+                if (x >= escenario[i].length - 1 || y >= escenario[i].length - 1){
                     return false;
                 }
             }
-        }
 
     return true;
     }
@@ -85,7 +82,7 @@ public class Escenario {
 
         if (esUnPuntoDelEscenario(escenario, x, y)) {
 
-            if (escenario[y][x].equals(GEMA)) {
+            if (escenario[x][y].equals(GEMA)) {
                 return true;
             }
         }
@@ -101,9 +98,7 @@ public class Escenario {
 
         if (esUnPuntoDelEscenario(escenario, x, y)) {
 
-            if (escenario[y][x].equals(GEMA)) {
-
-            }
+            escenario[x][y] = NADA;
         }
     }
 
@@ -115,7 +110,7 @@ public class Escenario {
         int gemasQuedan = 0;
 
         for (int i = 0; i < escenario.length; i++) {
-            for (int j = 0; j < escenario.length; j++) {
+            for (int j = 0; j < escenario[i].length; j++) {
                 if (escenario[i][j].equals(GEMA)){
                     gemasQuedan++;
                 }

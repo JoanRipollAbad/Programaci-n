@@ -1,5 +1,7 @@
 package IndianaJones;
 
+import java.util.Arrays;
+
 public class Serpientes {
     /**
      * Esta clase agrupa métodos dedicados a la gestión de posición y desplazamiento de los
@@ -20,7 +22,17 @@ public class Serpientes {
      */
     public static void reestablecerAPosicionesIniciales(int[][] posicionesSerpientes) {
 
-        posicionesSerpientes = obtenerPosicionesInicio();
+        int[][] posicionInicio = obtenerPosicionesInicio();
+
+        for (int i = 0; i < posicionInicio.length; i++) {
+            for (int j = 0; j < posicionInicio[i].length; j++) {
+
+                posicionesSerpientes[i][j] = posicionInicio[i][j];
+
+            }
+
+        }
+
     }
 
     /**
@@ -30,26 +42,28 @@ public class Serpientes {
     public static void mover(String[][] escenario, int[][] posicionSerpientes) {
 
         int posSerpiente;
-        int[] ayuda;
 
         for (int i = 0; i < posicionSerpientes.length; i++) {
-            for (int j = 0; j < posicionSerpientes[i].length; j++) {
 
-                int intentos = 0;
+            int intentos = 0;
+            int[] ayuda;
 
-                do {
-                    posSerpiente = Movimiento.obtieneDireccionAleatoria();
-                    ayuda = Movimiento.obtenerCoordenadaAdyacente(posSerpiente, posicionSerpientes[i]);
+            do {
+                posSerpiente = Movimiento.obtieneDireccionAleatoria();
+                ayuda = Arrays.copyOf(Movimiento.obtenerCoordenadaAdyacente(posSerpiente, posicionSerpientes[i]) , posicionSerpientes[i].length);
 
-                    if (Escenario.estaPermitidoElPaso(escenario, ayuda[0], ayuda[1]) && !escenario[ayuda[0]][ayuda[1]].equals(Escenario.SERPIENTE)) {
+                if (Escenario.estaPermitidoElPaso(escenario, ayuda[1], ayuda[0]) && Movimiento.esUnaDireccionValida(posSerpiente)) {
 
-                        Movimiento.obtenerCoordenadaAdyacente(posSerpiente, posicionSerpientes[i]);
+                    for (int j = 0; j < posicionSerpientes[i].length; j++) {
+
+                        posicionSerpientes[i][j] = Movimiento.obtenerCoordenadaAdyacente(posSerpiente, posicionSerpientes[i])[j];
+
                     }
+                break;
+                }
+                intentos++;
 
-                    intentos++;
-
-                } while (intentos < 3);
-            }
+            } while (intentos < 3);
         }
     }
 }

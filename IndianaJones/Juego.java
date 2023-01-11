@@ -8,10 +8,6 @@ public class Juego {
     static int VIDAS = 3;
     static int GEMAS = 0;
 
-    public static void main(String[] args) {
-        imprimirEscenario(Escenario.creaEscenario(), IndianaJones.obtenerPosicionInicio(), Serpientes.obtenerPosicionesInicio());
-        moverATodos(Escenario.creaEscenario(), IndianaJones.obtenerPosicionInicio(), Serpientes.obtenerPosicionesInicio());
-    } //borrar más tarde
     /**
      * Esta clase agrupa métodos dedicados a la gestión general de la partida en curso del juego.
      */
@@ -22,30 +18,35 @@ public class Juego {
      * Tras imprimir el escenario, también se imprime el número de vidas y de gemas
      * recogidas hasta el momento.
      */
-    public static void imprimirEscenario(String[][] escenario,int[] posicionIndianaJones, int[][] posicionSerpientes){
+    public static void imprimirEscenario(String[][] escenario,int[] posicionIndianaJones, int[][] posicionSerpientes) {
 
         boolean serp = true;
+        int contador = 0;
 
-        for (int i = 0; i < Escenario.creaEscenario().length; i++) {
-            for (int j = 0; j < Escenario.creaEscenario()[i].length; j++) {
-                serp = true;
-                if (j == posicionIndianaJones[0] && i == posicionIndianaJones[1]){
-                    System.out.print(Escenario.PERSONAJE);
-                    continue;
-                }
-                for (int k = 0; k < posicionSerpientes.length; k++) {
-                    if (i == posicionSerpientes[k][1] && j == posicionSerpientes[k][0]){
-                        System.out.print(Escenario.SERPIENTE);
-                        serp = false;
+        do {
+
+            for (int i = 0; i < Escenario.creaEscenario().length; i++) {
+                for (int j = 0; j < Escenario.creaEscenario()[i].length; j++) {
+                    serp = true;
+                    if (j == posicionIndianaJones[1] && i == posicionIndianaJones[0]) {
+                        System.out.print(Escenario.PERSONAJE);
+                        continue;
                     }
-                }
-                if (serp == false){
-                    continue;
-                }
+                        if (j == posicionSerpientes[contador][1] && i == posicionSerpientes[contador][0]) {
+                            System.out.print(Escenario.SERPIENTE);
+                            serp = false;
+                            if (contador < posicionSerpientes.length - 1){
+                                contador++;
+                            }
+                        }
+                    if (serp == false) {
+                        continue;
+                    }
                     System.out.print(escenario[i][j]);
+                }
+                System.out.println();
             }
-            System.out.println();
-        }
+        }while (serp == false);
     }
 
     /**
@@ -98,9 +99,9 @@ public class Juego {
                             Serpientes.reestablecerAPosicionesIniciales(Serpientes.obtenerPosicionesInicio());
                         }
                     }
-                    if (Escenario.hayGema(escenario, posicionIndianaJones[1], posicionIndianaJones[0])) {
+                    if (Escenario.hayGema(escenario, posicionIndianaJones[0], posicionIndianaJones[1])) {
                         GEMAS--;
-                        Escenario.vaciarCelda(escenario, posicionIndianaJones[1], posicionIndianaJones[0]);
+                        Escenario.vaciarCelda(escenario, posicionIndianaJones[0], posicionIndianaJones[1]);
                     }
                 }
             }
@@ -134,7 +135,7 @@ public class Juego {
         if (VIDAS == 0){
             return true;
         }
-        if (GEMAS <= 0){
+        if (Escenario.quedanGemas(escenario)){
             return true;
         }
         return false;
