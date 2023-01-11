@@ -1,6 +1,17 @@
 package IndianaJones;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class Juego {
+
+    static int VIDAS = 3;
+    static int GEMAS = 0;
+
+    public static void main(String[] args) {
+        imprimirEscenario(Escenario.creaEscenario(), IndianaJones.obtenerPosicionInicio(), Serpientes.obtenerPosicionesInicio());
+        moverATodos(Escenario.creaEscenario(), IndianaJones.obtenerPosicionInicio(), Serpientes.obtenerPosicionesInicio());
+    } //borrar más tarde
     /**
      * Esta clase agrupa métodos dedicados a la gestión general de la partida en curso del juego.
      */
@@ -13,6 +24,28 @@ public class Juego {
      */
     public static void imprimirEscenario(String[][] escenario,int[] posicionIndianaJones, int[][] posicionSerpientes){
 
+        boolean serp = true;
+
+        for (int i = 0; i < Escenario.creaEscenario().length; i++) {
+            for (int j = 0; j < Escenario.creaEscenario()[i].length; j++) {
+                serp = true;
+                if (j == posicionIndianaJones[0] && i == posicionIndianaJones[1]){
+                    System.out.print(Escenario.PERSONAJE);
+                    continue;
+                }
+                for (int k = 0; k < posicionSerpientes.length; k++) {
+                    if (i == posicionSerpientes[k][1] && j == posicionSerpientes[k][0]){
+                        System.out.print(Escenario.SERPIENTE);
+                        serp = false;
+                    }
+                }
+                if (serp == false){
+                    continue;
+                }
+                    System.out.print(escenario[i][j]);
+            }
+            System.out.println();
+        }
     }
 
     /**
@@ -24,7 +57,17 @@ public class Juego {
      */
     public static void moverATodos(String[][] escenario, int[] posicionIndianaJones, int[][] posicionSerpientes){
 
-    }
+        int direccion = Movimiento.pedirDireccion();
+        IndianaJones.moverEnDireccion(escenario, direccion, posicionIndianaJones);
+        for (int i = 0; i < posicionSerpientes.length; i++) {
+                if (posicionSerpientes[i] != posicionIndianaJones){
+                    Serpientes.mover(escenario, posicionSerpientes);
+                }
+                else {
+                    VIDAS--;
+                }
+            }
+        }
 
     /**
      * Actualiza los datos de vidas y gemas de la partida si procede.
@@ -40,8 +83,28 @@ public class Juego {
      * ESTE MÉTODO MODIFICA LAS VARIABLES GLOBALES de vidas y gemas recolectadas que
      * hayas declarado en esta clase.
      */
-    public static void actualizarDatos(String[][]escenario, int[] posicionIndianaJones, int[][]posicionSerpientes){
+    public static void actualizarDatos(String[][]escenario, int[] posicionIndianaJones, int[][]posicionSerpientes) {
 
+        do {
+            for (int i = 0; i < escenario.length; i++) {
+                for (int j = 0; j < escenario[i].length; j++) {
+                    if (escenario[i][j].equals(Escenario.GEMA)) {
+                        GEMAS++;
+                    }
+                    for (int k = 0; k < posicionSerpientes.length; k++) {
+                        if (posicionSerpientes[k] == posicionIndianaJones) {
+                            VIDAS--;
+                            IndianaJones.reestablecerAPosicionInicial(IndianaJones.obtenerPosicionInicio());
+                            Serpientes.reestablecerAPosicionesIniciales(Serpientes.obtenerPosicionesInicio());
+                        }
+                    }
+                    if (Escenario.hayGema(escenario, posicionIndianaJones[1], posicionIndianaJones[0])) {
+                        GEMAS--;
+                        Escenario.vaciarCelda(escenario, posicionIndianaJones[1], posicionIndianaJones[0]);
+                    }
+                }
+            }
+        } while (VIDAS > 0);
     }
 
     /**
@@ -53,6 +116,13 @@ public class Juego {
      */
     public static void imprimirMensajeFinDeJuego(String[][] escenario){
 
+        if (VIDAS == 0){
+            System.out.println("Has perdido. Fin del juego");
+        }
+
+        if (GEMAS <= 0) {
+            System.out.println("Has ganado. ¡Enhorabuena!");
+        }
     }
 
 
@@ -61,6 +131,12 @@ public class Juego {
      */
     public static boolean seHaTerminado(String[][]escenario){
 
+        if (VIDAS == 0){
+            return true;
+        }
+        if (GEMAS <= 0){
+            return true;
+        }
         return false;
     }
 }

@@ -13,11 +13,11 @@ public class Escenario {
      * Define e inicializa estas constantes de estado de celda con estos nombres
      * Las celdas del escenario sólo podrán contener uno de estos tres valores
      */
-    static final String NADA = "\uD83ED\uDFE1";
+    static final String NADA = "\uD83D\uDD34";
     static final String MURO = "\uD83E\uDDF1";
     static final String GEMA = "\uD83D\uDC8E";
-    static final String SERPIENTE = "\uD83D\uDC8E"; //cambiar le dibujito osea la parte del ud...
-    static final String PERSONAJE = "\uD83D\uDC8E"; //cambiar le dibujito osea la parte del ud...
+    static final String SERPIENTE = "\uD83D\uDC0A";
+    static final String PERSONAJE = "\uD83C\uDFC3"; //cambiar le dibujito osea la parte del ud...
 
     /**
      * Crea y devuelve el escenario inicial del juego. Dispones de un ejemplo de
@@ -66,9 +66,12 @@ public class Escenario {
     public static boolean estaPermitidoElPaso(String [][] escenario, int x, int y) {
 
         if (esUnPuntoDelEscenario(escenario, x, y)) {
-
-            if (escenario[x][y].equals(MURO)) {
-                return false;
+            for (int i = 0; i < escenario.length; i++) {
+                for (int j = 0; j < escenario[i].length; j++) {
+                    if (escenario[i][j].equals(MURO)) {
+                        return false;
+                    }
+                }
             }
         }
         return true;

@@ -16,7 +16,7 @@ public class Principal {
 
     public static void inicio() {
 
-       /* String[][] escenario = Escenario.creaEscenario();
+        String[][] escenario = Escenario.creaEscenario();
         int[] posicionIndianaJones = IndianaJones.obtenerPosicionInicio();
         int[][] posicionSerpientes = Serpientes.obtenerPosicionesInicio();
 
@@ -26,6 +26,6 @@ public class Principal {
             Juego.actualizarDatos(escenario, posicionIndianaJones, posicionSerpientes);
         } while (!Juego.seHaTerminado(escenario));
 
-        Juego.imprimirMensajeFinDeJuego(escenario);*/
+        Juego.imprimirMensajeFinDeJuego(escenario);
     }
 }

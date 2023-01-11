@@ -1,9 +1,8 @@
 package IndianaJones;
 
+import java.util.Scanner;
+
 public class Movimiento {
-    public static void main(String[] args) {
-        System.out.println(pedirDireccion());
-    }
     /**
      * Esta clase agrupa métodos dedicados a la gestión de desplazamiento de los personajes
      * del juego. Debes definir en ella las constantes relacionadas con las direcciones y
@@ -83,6 +82,8 @@ public class Movimiento {
 
             System.out.print("Introduce el movimiento (W/A/S/D):");
 
+            Principal.scanner = new Scanner(System.in);
+
             switch (Principal.scanner.next()) {
 
                 case "W", "w":
@@ -99,9 +100,7 @@ public class Movimiento {
                     break;
             }
 
-            System.out.println(direccion);
-
-        } while (direccion == 0);
+        } while (direccion < 1 || direccion > 4);
 
         return direccion;
     }
